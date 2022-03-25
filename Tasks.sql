@@ -26,8 +26,22 @@ SELECT * FROM inventory JOIN rental ON inventory.inventory_id = rental.inventory
 SELECT Avg(length) FROM film;
 SELECT category_id, Avg(film.length) FROM film JOIN film_category ON film.film_id = film_category.film_id GROUP BY film_category.category_id;
 SELECT title, description FROM film_text WHERE description LIKE "%Robot%";
-SELECT title, max(length) FROM film;
-SELECT * FROM film;
+SELECT title, length FROM film WHERE length = (
+SELECT max(length) FROM film
+);
+SELECT count(title) FROM film WHERE release_year = 2010;
+SELECT title, film_category.category_id FROM film JOIN film_category ON film.film_id = film_category.film_id WHERE film_category.category_id = (
+	SELECT category_id FROM category WHERE name = "Horror"
+);
+SELECT concat(first_name, " ", last_name) AS full_name FROM staff WHERE staff_id = 1;
+SELECT title, film_actor.actor_id  FROM film JOIN film_actor ON film.film_id = film_actor.film_id WHERE film_actor.actor_id = (
+	SELECT actor_id FROM actor WHERE first_name = "Fred" AND last_name = "Costner"
+);
+SELECT count(film_id), store_id FROM inventory WHERE film_id= (
+SELECT film_id FROM film WHERE title='Bucket Brotherhood'
+) GROUP BY store_id;
+
+
 
 
 
