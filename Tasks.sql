@@ -40,9 +40,17 @@ SELECT title, film_actor.actor_id  FROM film JOIN film_actor ON film.film_id = f
 SELECT count(film_id), store_id FROM inventory WHERE film_id= (
 SELECT film_id FROM film WHERE title='Bucket Brotherhood'
 ) GROUP BY store_id;
-
-
-
+SELECT count(DISTINCT country) FROM country;
+SELECT * FROM language ORDER BY name ASC;
+SELECT concat(first_name, " ", last_name) AS full_name FROM actor ORDER BY first_name;
+SELECT name, count(film_id) FROM category JOIN film_category ON category.category_id = film_category.category_id GROUP BY film_category.category_id;
+SELECT concat(first_name, " ", last_name), count(film_id) FROM actor JOIN film_actor ON actor.actor_id = film_actor.actor_id GROUP BY film_actor.actor_id;
+SELECT actor.actor_id, actor.first_name, actor.last_name,
+count(actor_id) as film_count
+FROM actor JOIN film_actor USING (actor_id)
+GROUP BY actor_id
+ORDER BY film_count DESC
+LIMIT 1;
 
 
 
